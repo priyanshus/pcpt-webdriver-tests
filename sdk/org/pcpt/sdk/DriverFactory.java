@@ -68,7 +68,7 @@ public class DriverFactory {
 	 * @return Instance of WebDriver
 	 */
 	private WebDriver getLocalDriver() {
-		String browserName = propReader.getPropertyValue("browser.name");
+		String browserName = ConfigurationReader.getInstance().getPropertyValue("browser.name");
 		String implicitWaitTimeout = propReader.getPropertyValue("implicit.timeout");
 		Long timeout = Long.parseLong(implicitWaitTimeout);
 		if (browserName.equals("chrome") || browserName.equals("Chrome")) {

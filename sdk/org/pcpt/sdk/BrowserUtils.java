@@ -14,7 +14,7 @@ package org.pcpt.sdk;
 public class BrowserUtils {
 	private static BrowserUtils instance = null;
 	
-	private static final String DRIVERS_FOLDER = "/libs/browser-drivers";
+	private static final String DRIVERS_FOLDER = "/browser-drivers";
 	
 	private BrowserUtils() {
 	}

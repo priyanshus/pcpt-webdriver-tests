@@ -3,6 +3,7 @@ bin
 docs
 test-output
 report
+build
 
 # Ant autocomplete
 .ant-targets-build.xml
@@ -12,4 +13,8 @@ report
 
 # NetBeans files
 /nbproject/private/
+
+# Allure reports
+allure-report
+target
 

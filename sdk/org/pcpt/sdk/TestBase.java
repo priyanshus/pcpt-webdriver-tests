@@ -17,9 +17,7 @@ public class TestBase {
 
 	@BeforeSuite
 	public void setup() {
-		PropertiesReader prop = new PropertiesReader(Constants.BUILD_PROERTIES_PATH);
-		url = prop.getPropertyValue("url");
-
+		url = ConfigurationReader.getInstance().getPropertyValue("url");
 		driver = DriverFactory.getInstance().getDriver();
 		driver.get(url);
 	}

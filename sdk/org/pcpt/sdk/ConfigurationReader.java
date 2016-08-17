@@ -6,40 +6,34 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 
-/**
- * Utility class to read the properties files
- * 
- * <br><br><b>Example:</b>
- * <pre>
- * {@code
- * PropertiesReader prop = new PropertiesReader(pathOfPropFile);
- * String value = prop.getPropertyValue(key);
- * System.out.println(value);
- * }
- * </pre>
- */
-public class PropertiesReader {
-	private Properties prop;
-	private HashMap<String, String> cachedProps;
-
-	/**
-	 * Constructor
-	 * 
-	 * @param path
-	 *            Path of the file
-	 */
-	public PropertiesReader(String path) {
-		loadProperties(path);
+public class ConfigurationReader {
+private static ConfigurationReader instance = null;
+private static Properties prop;
+private static HashMap<String, String> cachedProps;
+	
+	private static final String BUILD_PROPERTIES_PATH = "/build.properties";
+	
+	private ConfigurationReader() {
 	}
+	
+	public static ConfigurationReader getInstance() {
+		if (instance == null) {
 
+			instance = new ConfigurationReader();
+			loadProperties();
+		}
+
+		return instance;
+	}
+	
 	/**
 	 * Load properties file
 	 * 
 	 * @param path
 	 *            Path of the file
 	 */
-	private void loadProperties(String path) {
-		path = System.getProperty("user.dir") + path;
+	private static void loadProperties() {
+		String path = System.getProperty("user.dir") + BUILD_PROPERTIES_PATH;
 		prop = new Properties();
 		cachedProps = new HashMap<String, String>();
 		try {
@@ -52,7 +46,7 @@ public class PropertiesReader {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Reads the value of given key from properties file
 	 * 
