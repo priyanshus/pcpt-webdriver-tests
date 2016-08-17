@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="PCPT WebDriver Suite" default="run" basedir=".">
+    <property file="build.properties"/>
+    <property name="compiler.out" value="${basedir}/bin"/>
+    <property name="sdk.src" value="${basedir}/sdk"/>
+    <property name="tests.src" value="${basedir}/tests"/>
+    <property name="tests.out" value="${basedir}/test-output"/>
+    <property name="tests.report" value="${basedir}/report"/>
+    <property name="docs.out" value="${basedir}/docs"/>
+    <property name="testng.suites" value="${basedir}/testng-xmls"/>
+
+    <target name="setClassPath" unless="classpath">
+        <path id="classpathJars">
+            <fileset dir="${basedir}/libs" includes="**/*.jar"/>
+            <filelist>
+                <file name="${compiler.out}"/>
+            </filelist>
+        </path>
+        <pathconvert pathsep=":" property="classpath" refid="classpathJars"/>
+    </target>
+
+    <target name="init" depends="setClassPath">
+        <taskdef resource="testngtasks" classpath="${classpath}"/>
+    </target>
+
+    <target name="clean" description="Removes generated files" unless="is_clean">
+        <delete dir="${docs.out}"/>
+        <delete dir="${tests.out}"/>
+        <delete dir="${tests.report}"/>
+        <property name="is_clean" value="true"/>
+    </target>
+
+    <target name="clean-all" depends="clean" description="Removes ALL the generated files, including the compiled files">
+        <delete dir="${compiler.out}"/>
+        <property name="is_clean" value="true"/>
+    </target>
+
+    <target name="compile-sdk" depends="init, clean" description="Compiles all the Java classes">
+        <mkdir dir="${compiler.out}"/>
+        <echo message="Compiling SDK..."/>
+        <javac debug="true"
+            srcdir="${sdk.src}"
+            destdir="${compiler.out}"
+            includes="**/*.java"
+            target="1.7"
+            classpath="${classpath}"
+            includeantruntime="false">
+        </javac>
+    </target>
+
+    <target name="compile-tests" depends="init, clean" description="Compiles all the Java classes">
+        <echo message="Compiling tests..."/>
+        <javac debug="true"
+            srcdir="${tests.src}"
+            destdir="${compiler.out}"
+            includes="**/*.java"
+            target="1.7"
+            classpath="${classpath}"
+            includeantruntime="false">
+        </javac>
+    </target>
+
+    <target name="javadoc" depends="init" description="Generates API documentation">
+        <delete dir="${docs.out}"/>
+        <javadoc packagenames="org.fronter.automation.sdk.*"
+            sourcepath="${sdk.src}"
+            classpath="${classpath}"
+            defaultexcludes="yes"
+            destdir="${docs.out}"
+            version="true"
+            use="true"
+            windowtitle="PCPT WebDriver API">
+        </javadoc>
+    </target>
+
+    <target name="run" depends="compile-sdk, compile-tests" description="Run Selenium tests using TestNG">
+
+        <!-- Run the tests -->
+        <property name="suite" value="*"/>
+    	<property name="suite.excluded" value="null"/>
+        <testng classpath="${classpath}" parallel="none">
+
+        	<!-- To exclude list of suites from running, pass the values of suite.excluded in fileName.xml format. (eg. suite.excluded = file_name1.xml file_name2.xml) -->
+            <xmlfileset dir="${testng.suites}" includes="${suite}.xml" excludes="${suite.excluded}/**"/>
+
+            <!-- Properties that can be changed through build.properties or the command line -->
+            <env key="url" value="${url}"/>
+            <env key="browser.name" value="${browser.name}"/>
+        </testng>
+
+        <!-- Generate the report 
+        <mkdir dir="${tests.report}"/>
+        <xslt in="${tests.out}/testng-results.xml" style="${basedir}/testng-template-v1.5.xsl" out="${tests.report}/index.html" classpathref="classpathJars" processor="SaxonLiaison">
+            <param name="testNgXslt.outputDir" expression="${tests.report}" />
+            <param name="testNgXslt.sortTestCaseLinks" expression="true" />
+            <param name="testNgXslt.testDetailsFilter" expression="FAIL,SKIP,PASS,BY_CLASS" />
+            <param name="testNgXslt.showRuntimeTotals" expression="true" />
+        </xslt>-->
+
+        <fail message="Some tests failed">
+            <condition>
+                <available file="${tests.out}/tests-failed"/>
+            </condition>
+        </fail>
+    </target>
+</project>

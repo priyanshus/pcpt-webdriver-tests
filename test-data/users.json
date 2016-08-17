@@ -1,0 +1,37 @@
+[
+   {
+      "firstname":"Daniel",
+      "lastname":"Hansen",
+      "email":"dhansen0@thetimes.co.uk",
+      "username":"dhansen0",
+      "password":"aU6nA4t"
+   },
+   {
+      "firstname":"Pamela",
+      "lastname":"Larson",
+      "email":"plarson1@booking.com",
+      "username":"plarson1",
+      "password":"Hfc7l0NSlw9"
+   },
+   {
+      "firstname":"Richard",
+      "lastname":"Williamson",
+      "email":"rwilliamson2@cocolog-nifty.com",
+      "username":"rwilliamson2",
+      "password":"mSqg2mpEDyAE"
+   },
+   {
+      "firstname":"Julia",
+      "lastname":"Collins",
+      "email":"jcollins3@netlog.com",
+      "username":"jcollins3",
+      "password":"2u29zWc"
+   },
+   {
+      "firstname":"Andrew",
+      "lastname":"Evans",
+      "email":"aevans4@virginia.edu",
+      "username":"aevans4",
+      "password":"JahWptU"
+   }
+]

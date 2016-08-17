@@ -1,0 +1,15 @@
+# Generated folders
+bin
+docs
+test-output
+report
+
+# Ant autocomplete
+.ant-targets-build.xml
+
+# OS files
+.DS_Store
+
+# NetBeans files
+/nbproject/private/
+
