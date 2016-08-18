@@ -72,11 +72,34 @@
         	<xmlfileset dir="${basedir}/testng-xmls" includes="*.xml"/>
         </testng>
     </target>
+	
+	<target name="build" depends="compile" description="Exports the SDK in JAR files to be used in other projects">
+	        <fail unless="build.version" message="Version not set. Use ant build -Dbuild.version=xxx (where xxx is the version number)"/>
+	        
+
+	        <!-- Create a standard JAR file -->
+	        <jar destfile="${build}/automation-sdk-${build.version}.jar" basedir="${build.compile}" includes="**/*.class"></jar>
+
+	        <!-- Create a JAR file attaching the source (for debugging and javadocs) -->
+	        <jar destfile="${build}/automation-sdk-${build.version}-sources.jar">
+	            <fileset dir="${build.compile}" includes="**/*.class"/>
+	            <fileset dir="${src.main}" includes="**/*.java"/>
+	        </jar>
+
+	        <echo>${line.separator}</echo>
+	        <echo>===========================================================</echo>
+	        <echo>Build successful!</echo>
+	        <echo>Remember to commit the generated files and then</echo>
+	        <echo>create a tag for this version: git tag ${build.version}</echo>
+	        <echo>===========================================================</echo>
+	        <echo>${line.separator}</echo>
+	    </target>
 
     <target name="clean" description="Clean up">
         <delete dir="${build}"/>
     	<delete dir="${build.report}"/>
     	<delete dir="${basedir}/target"/>
+    	<delete dir="${basedir}/log-report"/>
     </target>
 
     <target name="run" depends="clean,test" description="Do the entire lifecycle"/>

@@ -1,8 +1,8 @@
 package org.pcpt.sdk;
 
 /**
- * Class to define project constants
- * <br><br>
+ * Class to define project constants <br>
+ * <br>
  * 
  * Should be used to store test data files path, and other constants.
  */

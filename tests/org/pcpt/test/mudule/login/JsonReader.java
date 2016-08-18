@@ -5,6 +5,9 @@ import org.pcpt.sdk.TestDataReader;
 import org.pcpt.sdk.testdata.QuestionsLoader;
 import org.pcpt.sdk.testdata.UsersLoader;
 
+/**
+ * Dummy class to test json reader
+ */
 public class JsonReader {
 	public static void main(String[] arg) {
 		UsersLoader[] user = TestDataReader.loadJsonFile(UsersLoader[].class, Constants.USERS_TEST_DATA_FILE_PATH);

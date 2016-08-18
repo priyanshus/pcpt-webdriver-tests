@@ -9,12 +9,16 @@ import java.util.Properties;
 /**
  * Utility class to read the properties files
  * 
- * <br><br><b>Example:</b>
+ * <br>
+ * <br>
+ * <b>Example:</b>
+ * 
  * <pre>
- * {@code
- * PropertiesReader prop = new PropertiesReader(pathOfPropFile);
- * String value = prop.getPropertyValue(key);
- * System.out.println(value);
+ * {
+ * 	&#64;code
+ * 	PropertiesReader prop = new PropertiesReader(pathOfPropFile);
+ * 	String value = prop.getPropertyValue(key);
+ * 	System.out.println(value);
  * }
  * </pre>
  */

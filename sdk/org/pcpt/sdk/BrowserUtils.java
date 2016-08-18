@@ -1,11 +1,12 @@
 package org.pcpt.sdk;
 
 /**
- * Class responsible to provider browser driver for Chrome 
- * and Internet Explorer <br><br>
+ * Class responsible to provider browser driver for Chrome and Internet Explorer
+ * <br>
+ * <br>
  * 
- * Class fetches information about current operating system and arch bit 
- * and provides the path of browser driver. The browsr drivers are located at:<br>
+ * Class fetches information about current operating system and arch bit and
+ * provides the path of browser driver. The browsr drivers are located at:<br>
  * <br>
  * [project-directory]/libs/browser-driver/[operating-system]/[os-bits]/driver
  * 
@@ -13,18 +14,19 @@ package org.pcpt.sdk;
  */
 public class BrowserUtils {
 	private static BrowserUtils instance = null;
-	
+
 	private static final String DRIVERS_FOLDER = "/browser-drivers";
-	
+	private String className = this.getClass().getSimpleName();
+
 	private BrowserUtils() {
 	}
-	
+
 	public static BrowserUtils getInstance() {
-		if(instance == null)
+		if (instance == null)
 			instance = new BrowserUtils();
 		return instance;
 	}
-	
+
 	/**
 	 * Check if current os is 64bits or not
 	 * 
@@ -33,28 +35,32 @@ public class BrowserUtils {
 	private boolean is64bitSystem() {
 		boolean is64bit = false;
 		if (System.getProperty("os.name").contains("Windows")) {
-		    is64bit = (System.getenv("ProgramFiles(x86)") != null);
-		    
+			is64bit = (System.getenv("ProgramFiles(x86)") != null);
+
 		} else {
-		    is64bit = (System.getProperty("os.arch").indexOf("64") != -1);
+			is64bit = (System.getProperty("os.arch").indexOf("64") != -1);
 		}
+		
+		LogReporter.getInstance().logInfo(className, "Found the system as 64bit: " + is64bit);
 		return is64bit;
 	}
-	
+
 	/**
 	 * Get the name of current operation system
 	 * 
 	 * @return String
 	 */
 	private String getOsFamily() {
-		return System.getProperty("os.name");
+		String osName = System.getProperty("os.name");
+		LogReporter.getInstance().logInfo(className, "Found the os as: " + osName);
+		return osName;
 	}
-	
+
 	/**
-	 * Method responsible to get the path of chrome driver based
-	 * on current operating system and arch bits
+	 * Method responsible to get the path of chrome driver based on current
+	 * operating system and arch bits
 	 * 
-	 * @return String 
+	 * @return String
 	 */
 	public String getChromeDriverPath() {
 		String path = System.getProperty("user.dir") + DRIVERS_FOLDER;
@@ -69,20 +75,22 @@ public class BrowserUtils {
 		} else if (osFamily.contains("Mac")) {
 			path += "/mac/<bits>/chromedriver";
 		}
-		
-		if(is64bitSystem) {
+
+		if (is64bitSystem) {
 			path = path.replace("<bits>", "64bits");
-		}else {
+		} else {
 			path = path.replace("<bits>", "32bits");
 		}
+		
+		LogReporter.getInstance().logInfo(className, "Found chrome driver path as: " + path);
 		return path;
 	}
-	
+
 	/**
-	 * Method responsible to get the path of ie driver based
-	 * on current operating system and arch bits
+	 * Method responsible to get the path of ie driver based on current
+	 * operating system and arch bits
 	 * 
-	 * @return String 
+	 * @return String
 	 */
 	public String getIEDriverPath() {
 		String path = System.getProperty("user.dir");
@@ -94,12 +102,14 @@ public class BrowserUtils {
 		} else {
 			System.err.println("IE Driver is not available for currect operating system");
 		}
-		
-		if(is64bitSystem) {
+
+		if (is64bitSystem) {
 			path.replace("<bits>", "64bits");
-		}else {
+		} else {
 			path.replace("<bits>", "32bits");
 		}
+		
+		LogReporter.getInstance().logInfo(className, "Found ie driver path as: " + path);
 		return path;
 	}
 }
