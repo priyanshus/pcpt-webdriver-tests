@@ -4,6 +4,7 @@ docs
 test-output
 report
 build
+log-report
 
 # Ant autocomplete
 .ant-targets-build.xml

@@ -36,7 +36,7 @@ You can run the tests either right clicking or using ant command. To run using a
 |           |-- chromedriver.exe
 |           |-- iedriverdriver.exe
 |           `-- iedriver.exe
-|-- build.properties									// project perperties
+|-- build.properties								// project perperties
 |-- build.xml		
 |-- ivy.xml
 |-- lib
@@ -58,11 +58,11 @@ You can run the tests either right clicking or using ant command. To run using a
 |               |-- PropertiesReader.java			// Properties file reader
 |               |-- TestBase.java					// Test Base Class
 |               |-- testdata
-|               |   |-- QuestionsLoader.java      // Used to read questions.json
+|               |   |-- QuestionsLoader.java        // Used to read questions.json
 |               |   `-- UsersLoader.java			// Used to read users.json
 |               |-- TestDataReader.java				// Test Data reader class
 |               `-- Wait.java						// Common wait methods	
-|-- test-data											// test-data files
+|-- test-data									 	// test-data files
 |   |-- questions.json
 |   `-- users.json
 |-- testng-xmls								  		// xml suites
@@ -85,7 +85,7 @@ The tests will be running on top of `build.properties`, the build.properties fil
 
 Tests are based on page object model and test data will be coming from json file. The json files are kept under `test-data` directory. To read the test data you have to create a loader class corresponding to each json file under `prg.pcpt.sdk.testdata`. Please have look at `UsersLoader.java` to know more about it.
 
-New test classes should go to `tests` folder under `org.pcpt.test.module.<module-name>`. Each test class should extend the `TestBase` in order to fulfill the common life cycle of test. For example
+New test classes should go to `tests` folder under `org.pcpt.test.module.<module-name>`. Each test class should extend the `TestBase` in order to fulfill the common life cycle of test. For example:
 
 ```
 class LoginTest extends TestBase {
@@ -95,3 +95,43 @@ class LoginTest extends TestBase {
 	}
 }
 ```
+
+Each view of application should be replicated in page class under sdk folder as `org.pcpt.sdk.automation.<module-name>`. The module package contains two java classes one of them is responsible to provide common methods of page and the other one should have only verification methods.
+
+An example of test:
+
+```
+public UsersTest extends TestBase {
+	private LoginPage loginPage;
+	private HomePage homePage;
+	private CreateUser createUserPage;
+	private VerifyUserPage verifyUserPage;
+
+	@BeforeTest
+	public void instantiateSdk() {
+		loginPage = PageFactory.initElements(driver, LoginPage.class);
+		homePage = PageFactory.initElements(driver, HomePage.class);
+		createUserPage = PageFactory.initElements(driver, CreateUser.class);
+		verifyUserPage = new VerifyUserPage(driver);
+	}
+	
+	@Test
+	public void createTestUser() {
+		homePage = loginPage.login(username,password);
+		createUserPage = homePage.openCreateUserPage();
+		createUserPage.createNewUser(userdetails);
+		
+		verifyUserPage.hasUser(userdetails);
+	}
+}
+```
+
+#### Logs
+
+Debug logs can be found in `/log-report/debug-info.log` but make sure the debugger is enabled from build.properties.i.e. `debugging.enabled = true`
+
+#### Reports
+
+Testng factory reporst will be accessible under `/report` directory. The allure reports will get generated under `target` folder which further needs to converted into html using allure-cli command.
+
+
