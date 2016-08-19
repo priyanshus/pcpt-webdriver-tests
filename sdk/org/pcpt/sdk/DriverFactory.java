@@ -21,7 +21,6 @@ public class DriverFactory {
 	private static DriverFactory instance = null;
 	private static PropertiesReader propReader;
 	private WebDriver driver;
-
 	private String className = this.getClass().getSimpleName();
 
 	private DriverFactory() {
@@ -34,6 +33,7 @@ public class DriverFactory {
 		propReader = new PropertiesReader(Constants.BUILD_PROERTIES_PATH);
 		if (instance == null) {
 			instance = new DriverFactory();
+			new AllureConfiguration("report/allure-result");
 		}
 		return instance;
 	}

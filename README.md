@@ -9,7 +9,9 @@ WebDriver framework based on page objects. Have support for :
 
 ## How to setup
 
-Clone this repository using command: `git clone`
+Clone this repository using command: 
+
+```git clone https://github.com/priyanshus/pcpt-webdriver-tests.git```
 
 ### System requirement
 
@@ -22,7 +24,7 @@ You can run the tests either right clicking or using ant command. To run using a
 ## Project strucuture
 
 ```
-|-- browser-drivers
+|-- browser-drivers								   	// Browser drivers according to os
 |   |-- linux
 |   |   |-- 32bits
 |   |   |   `-- chromedriver
@@ -50,6 +52,7 @@ You can run the tests either right clicking or using ant command. To run using a
 |               |       |-- LoginPage.java			// Page class for login
 |               |       `-- VerifyLoginPage.java	// Verificatin class for login	
 |               |-- BrowserUtils.java				// Browser utils like chromedriver
+|				|-- AllureConfiguration.java		// Config for allure report
 |               |-- ConfigurationReader.java		// build.properties reader
 |               |-- Constants.java					// Project constants	
 |               |-- DriverFactory.java				// Responsible to instantiate webdriver
@@ -132,6 +135,6 @@ Debug logs can be found in `/log-report/debug-info.log` but make sure the debugg
 
 #### Reports
 
-Testng factory reporst will be accessible under `/report` directory. The allure reports will get generated under `target` folder which further needs to converted into html using allure-cli command.
+Testng factory reporst will be accessible under `/report` directory and the allure reports will get generated under `allure-result` folder which further needs to be converted into html using allure-cli command.
 
 

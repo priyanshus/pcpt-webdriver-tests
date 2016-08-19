@@ -1,5 +1,8 @@
 package org.pcpt.sdk.testdata;
 
+/**
+ * Class to map questions.json file
+ */
 public class QuestionsLoader {
 	public String title;
 	public String[] options;

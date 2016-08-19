@@ -25,8 +25,6 @@ public class Wait {
 
 	/**
 	 * Waits until angular finishes http calls in backend
-	 * <br>
-	 * Note: Should be used at most of the places
 	 */
 	public void untilAngularFinishesHttpCalls() {
 		final String javaScriptToLoadAngular = "var injector = window.angular.element('body').injector();"

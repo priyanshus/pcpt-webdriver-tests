@@ -5,7 +5,7 @@
       "correctAnswer":"option-1",
       "type":"dropdown"
    },
-    {
+   {
       "title":"Question-2",
       "options":["option-1","option-2"],
       "correctAnswer":"option-1",

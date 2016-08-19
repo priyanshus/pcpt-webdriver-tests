@@ -8,7 +8,6 @@
     <property name="build" location="${basedir}/build"/>
     <property name="build.compile" location="${build}/compile"/>
     <property name="build.test-compile" location="${build}/test-compile"/>
-    <property name="build.report" location="${basedir}/report"/>
     <property name="aspectj.version" value="1.7.4"/>
 
     <!-- Ivy properties -->
@@ -41,7 +40,7 @@
         <tstamp/>
         <mkdir dir="${build.compile}"/>
         <mkdir dir="${build.test-compile}"/>
-        <mkdir dir="${build.report}"/>
+    	<mkdir dir="${basedir}/log-report"/>
     </target>
 
     <target name="compile" depends="init" description="Compile the source">
@@ -56,13 +55,13 @@
         </javac>
     </target>
 
-    <target name="test" depends="test-compile" description="Run the tests">
+    <target name="test" depends="clean, test-compile" description="Run the tests">
         <taskdef name="testng" classname="org.testng.TestNGAntTask">
             <classpath>
                 <path refid="lib.path.id"/>
             </classpath>
         </taskdef>
-        <testng workingDir="${basedir}" outputdir="${build.report}">
+        <testng workingDir="${basedir}" outputdir="${basedir}/report">
             <jvmarg value="-javaagent:${ivy.lib.dir}/aspectjweaver-${aspectj.version}.jar"/>
             <classpath>
                 <pathelement location="${build.compile}"/>
@@ -89,16 +88,13 @@
 	        <echo>${line.separator}</echo>
 	        <echo>===========================================================</echo>
 	        <echo>Build successful!</echo>
-	        <echo>Remember to commit the generated files and then</echo>
-	        <echo>create a tag for this version: git tag ${build.version}</echo>
 	        <echo>===========================================================</echo>
 	        <echo>${line.separator}</echo>
 	    </target>
 
     <target name="clean" description="Clean up">
         <delete dir="${build}"/>
-    	<delete dir="${build.report}"/>
-    	<delete dir="${basedir}/target"/>
+    	<delete dir="${basedir}/report"/>
     	<delete dir="${basedir}/log-report"/>
     </target>
 
